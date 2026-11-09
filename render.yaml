@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: huellas-mascotas-api
+    runtime: python
+    rootDir: mascotas_api
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars: [{key: SUPABASE_URL, sync: false}, {key: SUPABASE_KEY, sync: false}]
+  - type: web
+    name: huellas-adopciones-api
+    runtime: python
+    rootDir: adopciones_api
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - {key: SUPABASE_URL, sync: false}
+      - {key: SUPABASE_KEY, sync: false}
+      - {key: MASCOTAS_API_URL, sync: false}
+  - type: web
+    name: huellas-frontend
+    runtime: static
+    staticPublishPath: frontend

@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Huellas de Esperanza – Adopción responsable</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --pizarra: #1f3a3d;
+      --bruma: #edf2f0;
+      --papel: #fff;
+      --mostaza: #e8a93b;
+      --musgo: #2e7d5b;
+      --mora: #9c2f52;
+      --linea: #c9d6d2;
+      --tinta: #1b2b2d
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font: 16px/1.5 "Bricolage Grotesque", system-ui, sans-serif;
+      background: var(--bruma);
+      color: var(--tinta)
+    }
+
+    header {
+      background: var(--pizarra);
+      color: #fff;
+      padding: 2rem 1.25rem 0
+    }
+
+    .wrap {
+      max-width: 1000px;
+      margin: auto
+    }
+
+    h1 {
+      font-size: clamp(2rem, 6vw, 3.4rem);
+      line-height: 1;
+      margin: 0 0 .4rem;
+      font-weight: 800;
+      letter-spacing: -.02em
+    }
+
+    header p {
+      margin: 0 0 1.5rem;
+      max-width: 52ch;
+      color: #cfe0dc
+    }
+
+    nav {
+      display: flex;
+      gap: .25rem
+    }
+
+    nav button {
+      font: inherit;
+      font-weight: 600;
+      background: transparent;
+      color: #cfe0dc;
+      border: 0;
+      padding: .7rem 1.1rem;
+      border-radius: .6rem .6rem 0 0;
+      cursor: pointer
+    }
+
+    nav button[aria-selected=true] {
+      background: var(--bruma);
+      color: var(--pizarra)
+    }
+
+    main {
+      padding: 1.5rem 1.25rem 4rem
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid var(--mostaza);
+      outline-offset: 2px
+    }
+
+    .bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      align-items: center;
+      margin-bottom: 1.25rem
+    }
+
+    .bar h2 {
+      margin: 0 auto 0 0;
+      font-size: 1.3rem
+    }
+
+    select,
+    input,
+    textarea {
+      font: inherit;
+      padding: .55rem .7rem;
+      border: 1px solid var(--linea);
+      border-radius: .5rem;
+      background: var(--papel);
+      width: 100%
+    }
+
+    .bar select {
+      width: auto
+    }
+
+    .btn {
+      font: inherit;
+      font-weight: 600;
+      border: 0;
+      border-radius: .5rem;
+      padding: .55rem 1rem;
+      cursor: pointer;
+      background: var(--pizarra);
+      color: #fff
+    }
+
+    .btn.sec {
+      background: transparent;
+      color: var(--pizarra);
+      border: 1px solid var(--pizarra)
+    }
+
+    .btn.ok {
+      background: var(--musgo)
+    }
+
+    .btn.no {
+      background: var(--mora)
+    }
+
+    .btn[disabled] {
+      opacity: .5;
+      cursor: not-allowed
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.1rem
+    }
+
+    .tag {
+      position: relative;
+      background: var(--papel);
+      border: 2px solid var(--pizarra);
+      border-radius: 1.4rem 1.4rem 1rem 1rem;
+      padding: 2.6rem 1.1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: .35rem
+    }
+
+    .tag::before {
+      content: "";
+      position: absolute;
+      top: .8rem;
+      left: 50%;
+      width: .95rem;
+      height: .95rem;
+      margin-left: -.475rem;
+      border-radius: 50%;
+      border: 2px solid var(--pizarra);
+      background: var(--bruma)
+    }
+
+    .tag h3 {
+      margin: 0;
+      font-size: 1.9rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      line-height: 1.05
+    }
+
+    .tag.off {
+      border-color: var(--linea);
+      color: #6c7f7b
+    }
+
+    .tag.off h3 {
+      text-decoration: line-through
+    }
+
+    .meta {
+      color: #4b605c;
+      font-size: .92rem
+    }
+
+    .chip {
+      align-self: flex-start;
+      font-size: .85rem;
+      font-weight: 600;
+      padding: .1rem .6rem;
+      border-radius: 99px;
+      background: #dcefe6;
+      color: #1d5a40
+    }
+
+    .chip.adoptada,
+    .chip.rechazada {
+      background: #f3dbe3;
+      color: var(--mora)
+    }
+
+    .chip.pendiente {
+      background: #fbebc8;
+      color: #7a5200
+    }
+
+    .tag .btn {
+      margin-top: auto;
+      align-self: flex-start
+    }
+
+    .panel,
+    .card {
+      background: var(--papel);
+      border: 1px solid var(--linea);
+      border-radius: .8rem;
+      padding: 1.1rem
+    }
+
+    .panel {
+      margin-bottom: 1.25rem
+    }
+
+    .form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: .8rem
+    }
+
+    .form label {
+      display: grid;
+      gap: .25rem;
+      font-weight: 600;
+      font-size: .92rem
+    }
+
+    .form .full {
+      grid-column: 1/-1
+    }
+
+    .list {
+      display: grid;
+      gap: .8rem
+    }
+
+    .card {
+      display: grid;
+      gap: .3rem
+    }
+
+    .card .row {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin-top: .4rem
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 1.15rem
+    }
+
+    .empty {
+      padding: 2rem;
+      text-align: center;
+      color: #4b605c;
+      border: 2px dashed var(--linea);
+      border-radius: .8rem
+    }
+
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: 1.2rem;
+      transform: translateX(-50%);
+      background: var(--pizarra);
+      color: #fff;
+      padding: .7rem 1.1rem;
+      border-radius: .6rem;
+      max-width: 90vw;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s
+    }
+
+    #toast.show {
+      opacity: 1
+    }
+
+    #toast.err {
+      background: var(--mora)
+    }
+
+    [hidden] {
+      display: none !important
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      * {
+        transition: none !important
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Huellas de Esperanza</h1>
+      <p>Conoce a las mascotas que esperan un hogar y sigue el estado de cada solicitud de adopción.</p>
+      <nav role="tablist">
+        <button role="tab" id="t-m" aria-selected="true">Mascotas</button>
+        <button role="tab" id="t-s" aria-selected="false">Solicitudes</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="v-m">
+      <div class="bar">
+        <h2>Mascotas</h2>
+        <select id="f-estado" aria-label="Filtrar por estado">
+          <option value="">Todas</option>
+          <option value="disponible" selected>Disponibles</option>
+          <option value="adoptada">Adoptadas</option>
+        </select>
+        <button class="btn sec" id="b-nueva">Registrar mascota</button>
+      </div>
+      <div class="panel" id="p-nueva" hidden>
+        <form class="form" id="f-nueva">
+          <label>Nombre<input name="nombre" required maxlength="80"></label>
+          <label>Especie<select name="especie">
+              <option>perro</option>
+              <option>gato</option>
+              <option>otro</option>
+            </select></label>
+          <label>Raza<input name="raza"></label>
+          <label>Edad (meses)<input name="edad_meses" type="number" min="0" required></label>
+          <label class="full">Descripción<textarea name="descripcion" rows="2"></textarea></label>
+          <div class="full"><button class="btn" type="submit">Guardar mascota</button></div>
+        </form>
+      </div>
+      <div class="grid" id="mascotas"></div>
+    </section>
+
+    <section id="v-s" hidden>
+      <div class="bar">
+        <h2>Solicitudes de adopción</h2>
+        <select id="f-sol" aria-label="Filtrar solicitudes">
+          <option value="">Todas</option>
+          <option value="pendiente">Pendientes</option>
+          <option value="aprobada">Aprobadas</option>
+          <option value="rechazada">Rechazadas</option>
+        </select>
+      </div>
+      <div class="panel" id="p-sol" hidden>
+        <form class="form" id="f-solicitud">
+          <p class="full" style="margin:0">Solicitud para <strong id="s-nombre"></strong></p>
+          <input type="hidden" name="mascota_id">
+          <label>Tu nombre<input name="solicitante_nombre" required minlength="2"></label>
+          <label>Correo<input name="solicitante_email" type="email" required></label>
+          <label>Teléfono<input name="solicitante_telefono"></label>
+          <label class="full">¿Por qué quieres adoptar? (mínimo 10 caracteres)<textarea name="motivo" rows="3" required
+              minlength="10"></textarea></label>
+          <div class="full"><button class="btn" type="submit">Enviar solicitud</button> <button class="btn sec"
+              type="button" id="b-cancel">Cancelar</button></div>
+        </form>
+      </div>
+      <div class="list" id="solicitudes"></div>
+    </section>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // Configura aquí las URLs públicas de tus APIs (o usa ?m=URL&a=URL en la dirección)
+    const q = new URLSearchParams(location.search);
+    const API_MASCOTAS = (q.get("m") || "http://localhost:8001").replace(/\/$/, "");
+    const API_ADOPCIONES = (q.get("a") || "http://localhost:8002").replace(/\/$/, "");
+
+    const $ = s => document.querySelector(s);
+    const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const edad = m => m < 12 ? `${m} meses` : `${Math.floor(m / 12)} año${m >= 24 ? "s" : ""}${m % 12 ? ` y ${m % 12} m` : ""}`;
+
+    function toast(msg, err = false) { const t = $("#toast"); t.textContent = msg; t.className = "show" + (err ? " err" : ""); clearTimeout(toast.t); toast.t = setTimeout(() => t.className = "", 3500) }
+    async function api(base, path, opt = {}) {
+      let r;
+      try { r = await fetch(base + path, { headers: { "Content-Type": "application/json" }, ...opt }); }
+      catch { throw new Error("No se pudo conectar con el servicio. Revisa que esté en línea."); }
+      if (r.status === 204) return null;
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(typeof d.detail === "string" ? d.detail : "Revisa los datos del formulario.");
+      return d;
+    }
+
+    function tab(which) {
+      const m = which === "m";
+      $("#v-m").hidden = !m; $("#v-s").hidden = m;
+      $("#t-m").setAttribute("aria-selected", m); $("#t-s").setAttribute("aria-selected", !m);
+      m ? cargarMascotas() : cargarSolicitudes();
+    }
+    $("#t-m").onclick = () => tab("m"); $("#t-s").onclick = () => tab("s");
+
+    async function cargarMascotas() {
+      const est = $("#f-estado").value;
+      try {
+        const ms = await api(API_MASCOTAS, "/mascotas" + (est ? `?estado=${est}` : ""));
+        $("#mascotas").innerHTML = ms.length ? ms.map(m => `
+      <article class="tag ${m.estado === "adoptada" ? "off" : ""}">
+        <h3>${esc(m.nombre)}</h3>
+        <span class="meta">${esc(m.especie)}${m.raza ? ` · ${esc(m.raza)}` : ""} · ${edad(m.edad_meses)}</span>
+        <span class="chip ${m.estado}">${m.estado === "disponible" ? "Disponible" : "Adoptada"}</span>
+        <p class="meta">${esc(m.descripcion)}</p>
+        ${m.estado === "disponible" ? `<button class="btn" data-adoptar="${m.id}" data-nombre="${esc(m.nombre)}">Solicitar adopción</button>` : ""}
+      </article>`).join("") : `<div class="empty">No hay mascotas con este filtro. Registra una nueva para empezar.</div>`;
+      } catch (e) { toast(e.message, true) }
+    }
+    $("#mascotas").onclick = e => {
+      const b = e.target.closest("[data-adoptar]"); if (!b) return;
+      tab("s"); $("#p-sol").hidden = false;
+      $("#f-solicitud").mascota_id.value = b.dataset.adoptar; $("#s-nombre").textContent = b.dataset.nombre;
+      $("#f-solicitud").solicitante_nombre.focus();
+    };
+    $("#b-cancel").onclick = () => $("#p-sol").hidden = true;
+    $("#f-estado").onchange = cargarMascotas; $("#f-sol").onchange = cargarSolicitudes;
+    $("#b-nueva").onclick = () => $("#p-nueva").hidden = !$("#p-nueva").hidden;
+
+    $("#f-nueva").onsubmit = async e => {
+      e.preventDefault();
+      const d = Object.fromEntries(new FormData(e.target)); d.edad_meses = +d.edad_meses;
+      Object.keys(d).forEach(k => d[k] === "" && delete d[k]);
+      try {
+        await api(API_MASCOTAS, "/mascotas", { method: "POST", body: JSON.stringify(d) });
+        toast("Mascota guardada"); e.target.reset(); $("#p-nueva").hidden = true; cargarMascotas();
+      } catch (er) { toast(er.message, true) }
+    };
+
+    $("#f-solicitud").onsubmit = async e => {
+      e.preventDefault();
+      const d = Object.fromEntries(new FormData(e.target)); if (!d.solicitante_telefono) delete d.solicitante_telefono;
+      try {
+        await api(API_ADOPCIONES, "/adopciones", { method: "POST", body: JSON.stringify(d) });
+        toast("Solicitud enviada"); e.target.reset(); $("#p-sol").hidden = true; cargarSolicitudes();
+      } catch (er) { toast(er.message, true) }
+    };
+
+    async function cargarSolicitudes() {
+      const est = $("#f-sol").value;
+      try {
+        const ss = await api(API_ADOPCIONES, "/adopciones" + (est ? `?estado=${est}` : ""));
+        $("#solicitudes").innerHTML = ss.length ? ss.map(s => `
+      <article class="card">
+        <h3>${esc(s.solicitante_nombre)} quiere adoptar a ${esc(s.mascota_nombre || "una mascota")}</h3>
+        <span class="chip ${s.estado}">${{ pendiente: "Pendiente", aprobada: "Aprobada", rechazada: "Rechazada" }[s.estado]}</span>
+        <span class="meta">${esc(s.solicitante_email)}${s.solicitante_telefono ? ` · ${esc(s.solicitante_telefono)}` : ""}</span>
+        <p style="margin:.3rem 0 0">${esc(s.motivo)}</p>
+        ${s.estado === "pendiente" ? `<div class="row"><button class="btn ok" data-accion="aprobar" data-id="${s.id}">Aprobar</button><button class="btn no" data-accion="rechazar" data-id="${s.id}">Rechazar</button></div>` : ""}
+      </article>`).join("") : `<div class="empty">Aún no hay solicitudes. Elige una mascota disponible y envía la primera.</div>`;
+      } catch (e) { toast(e.message, true) }
+    }
+    $("#solicitudes").onclick = async e => {
+      const b = e.target.closest("[data-accion]"); if (!b) return;
+      b.disabled = true;
+      try {
+        await api(API_ADOPCIONES, `/adopciones/${b.dataset.id}/${b.dataset.accion}`, { method: "POST" });
+        toast(b.dataset.accion === "aprobar" ? "Solicitud aprobada" : "Solicitud rechazada");
+      } catch (er) { toast(er.message, true) }
+      cargarSolicitudes();
+    };
+    cargarMascotas();
+  </script>
+</body>
+
+</html>
