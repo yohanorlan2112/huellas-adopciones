@@ -391,8 +391,8 @@
   <script>
     // Configura aquí las URLs públicas de tus APIs (o usa ?m=URL&a=URL en la dirección)
     const q = new URLSearchParams(location.search);
-    const API_MASCOTAS = (q.get("m") || "http://localhost:8001").replace(/\/$/, "");
-    const API_ADOPCIONES = (q.get("a") || "http://localhost:8002").replace(/\/$/, "");
+    const API_MASCOTAS = (q.get("m") || "https://huellas-mascotas-api.onrender.com").replace(/\/$/, "");
+    const API_ADOPCIONES = (q.get("a") || "https://huellas-adopciones-api.onrender.com").replace(/\/$/, "");
 
     const $ = s => document.querySelector(s);
     const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
